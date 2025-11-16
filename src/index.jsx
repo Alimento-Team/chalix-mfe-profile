@@ -36,32 +36,22 @@ subscribe(APP_READY, async () => {
   // Handler for header navigation
   const handleHeaderNavigation = (tab) => {
     const config = getConfig();
-    const lmsBaseUrl = config.LMS_BASE_URL || '';
-    
-    const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname.includes('local.openedx.io');
-    const protocol = window.location.protocol;
-    const hostname = window.location.hostname;
+    const lmsBaseUrl = config.LMS_BASE_URL;
+    const mfeBaseUrl = config.BASE_URL ;
+    const learnerDashboardUrl = `${mfeBaseUrl}/learner-dashboard`;
     
     switch (tab) {
       case 'home':
-        window.location.href = `${lmsBaseUrl}/`;
+        window.location.href = lmsBaseUrl;
         break;
       case 'category':
-        window.location.href = `${lmsBaseUrl}/courses`;
+        window.location.href = learnerDashboardUrl;
         break;
       case 'learning':
-        if (isDevelopment) {
-          window.location.href = `${protocol}//${hostname}:1996/learner-dashboard/`;
-        } else {
-          window.location.href = `${lmsBaseUrl}/dashboard`;
-        }
+        window.location.href = lmsBaseUrl;
         break;
       case 'personalize':
-        if (isDevelopment) {
-          window.location.href = `${protocol}//${hostname}:1996/learner-dashboard/?tab=personalized`;
-        } else {
-          window.location.href = `${lmsBaseUrl}/dashboard?tab=personalized`;
-        }
+        window.location.href = `${learnerDashboardUrl}?tab=personalized`;
         break;
       default:
         break;
